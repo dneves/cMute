@@ -1,0 +1,35 @@
+<idea-plugin version="2">
+  <name>cMute</name>
+  <description>Collaborative Mute - ...</description>
+  <version>0.0.1</version>
+  <vendor>Diogo Neves</vendor>
+  <idea-version since-build="8000"/>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+    <!-- Add your actions here -->
+      <!--
+      <group id="cMutePluginActionGroup"
+        text="Share Code" description="Share selected code with a buddy !"
+        popup="true" class="com.neon.intellij.plugin.cmute.action.ShareCodeGroup">
+
+      <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Maven.AddFileAsMavenProject"/>
+    </group>
+    -->
+  </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <toolWindow id="cMute" secondary="false" anchor="right"
+      icon="/com/neon/intellij/plugin/cmute/images/gtalk-icon.png"
+      factoryClass="com.neon.intellij.plugin.cmute.CMute">
+    </toolWindow>
+  </extensions>
+</idea-plugin>
