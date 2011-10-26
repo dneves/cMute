@@ -15,14 +15,14 @@
 
   <actions>
     <!-- Add your actions here -->
-      <!--
+
       <group id="cMutePluginActionGroup"
         text="Share Code" description="Share selected code with a buddy !"
         popup="true" class="com.neon.intellij.plugin.cmute.action.ShareCodeGroup">
 
       <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="Maven.AddFileAsMavenProject"/>
     </group>
-    -->
+
   </actions>
 
   <extensions defaultExtensionNs="com.intellij">

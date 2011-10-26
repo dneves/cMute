@@ -40,7 +40,11 @@ public class SettingsPanel extends JPanel
 
     private void setupComponents()
     {
-
+        textHost.setText( "neon.homeunix.net" );
+        textPort.setText( "5222" );
+        textService.setText( "Neon XMPP Server" );
+        textUsername.setText( "tester" );
+        textPassword.setText( "tester" );
     }
 
     private void setupListeners()

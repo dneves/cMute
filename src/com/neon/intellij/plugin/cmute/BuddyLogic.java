@@ -70,7 +70,7 @@ public class BuddyLogic
                 result = getIconByPresenceType( presence.getType() );
             }
 		}
-		return result;
+		return result == null ? PluginImages.STATUS.OFFLINE : result;
 	}
 
     private Icon getIconByStatusMessage( String statusMessage )
@@ -110,7 +110,7 @@ public class BuddyLogic
 
     private Icon getIconByMode( Presence.Mode mode )
     {
-        Icon result = PluginImages.STATUS.ONLINE;
+        Icon result = PluginImages.STATUS.OFFLINE;
         if ( mode != null )
         {
             switch ( mode )
@@ -131,6 +131,17 @@ public class BuddyLogic
                     result = PluginImages.STATUS.AWAY_EXTENDED;
                     break;
             }
+        }
+        return mode == null ? null : result;
+    }
+
+    public boolean isOnline( BuddyBean buddy )
+    {
+        boolean result = false;
+        if ( buddy != null )
+        {
+            Presence p = buddy.getPresence();
+            result = p != null && p.isAvailable();
         }
         return result;
     }

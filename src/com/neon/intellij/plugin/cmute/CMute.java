@@ -13,9 +13,6 @@ import com.intellij.ui.content.ContentFactory;
 public class CMute implements ToolWindowFactory
 {
 
-	public static final String DEFAULT_HOST = "talk.google.com";
-	public static final String DEFAULT_PORT = "5222";
-
     private Project currentProject;
 
     private ToolWindow toolWindow;

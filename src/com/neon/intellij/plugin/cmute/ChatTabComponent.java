@@ -79,7 +79,7 @@ public class ChatTabComponent extends JPanel
                 if ( selectedIndex != indexOfThis )
                 {
                     // TODO : blink this tab component
-                    System.out.println( "TODO : make this tab component blink !" );
+                    System.out.println( "ChatTabComponent . messageListener() : TODO - make this tab component blink !" );
                 }
             }
         });

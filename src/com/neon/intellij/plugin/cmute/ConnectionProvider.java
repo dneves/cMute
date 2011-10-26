@@ -1,6 +1,7 @@
 package com.neon.intellij.plugin.cmute;
 
 
+import com.neon.intellij.plugin.cmute.action.ActionLogic;
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
@@ -13,17 +14,20 @@ import java.util.*;
  */
 public class ConnectionProvider
 {
-    private static ConnectionProvider INSTANCE = null;
+    private static final boolean DEBUG = true;
 
+
+    private static ConnectionProvider INSTANCE = null;
 
     public static final String SOFTWARE_VERSION = "0.0.1";
 
-    public static final String SOFTWARE_NAME = "Collaborative Mute";
+    public static final String SOFTWARE_NAME = "cMute";
 
     public static final String SOFTWARE_NAME_SHORT = "cMute";
 
     public static final String AGENT_NAME = SOFTWARE_NAME_SHORT + " " + SOFTWARE_VERSION;
 
+    private final Map< String, BuddyBean > rosterEntryMap = new HashMap< String, BuddyBean >(  );
 
     private Connection connection = null;
 
@@ -113,6 +117,7 @@ public class ConnectionProvider
                 @Override
                 public void connectionClosed()
                 {
+                    ActionLogic.getInstance().updateActions();
                     fireOnDisconnect( null );
                 }
 
@@ -176,18 +181,21 @@ public class ConnectionProvider
                 @Override
                 public void entriesAdded(Collection<String> strings)
                 {
+                    // TODO : refresh buddy list
                     System.out.println( "entriesAdded() : " + strings );
                 }
 
                 @Override
                 public void entriesUpdated(Collection<String> strings)
                 {
+                    // TODO : refresh buddy list
                     System.out.println( "entriesUpdated() : " + strings );
                 }
 
                 @Override
                 public void entriesDeleted(Collection<String> strings)
                 {
+                    // TODO : refresh buddy list
                     System.out.println( "entriesDeleted() : " + strings );
                 }
 
@@ -201,6 +209,9 @@ public class ConnectionProvider
                     }
                     buddyBean.setCodeSharingEnabled( isCodeSharingEnable( presence ) );
                     buddyBean.setPresence( presence );
+
+                    ActionLogic.getInstance().updateActions();
+
                     fireOnPresenceChanged( presence );
                 }
             });
@@ -242,6 +253,11 @@ public class ConnectionProvider
     }
 
 
+    private boolean isCodeSharingEnable( BuddyBean buddy )
+    {
+        return buddy == null ? false : isCodeSharingEnable( buddy.getPresence() );
+    }
+
     private boolean isCodeSharingEnable( Presence presence )
     {
         boolean result = false;
@@ -251,7 +267,7 @@ public class ConnectionProvider
             String clientName = getResourceName( from );
             result = clientName != null && clientName.startsWith( SOFTWARE_NAME_SHORT );
         }
-        return result;
+        return result || DEBUG;
     }
 
     private BuddyBean createBuddyBean( RosterEntry entry )
@@ -259,12 +275,24 @@ public class ConnectionProvider
         BuddyBean result = new BuddyBean();
         result.setRosterEntry( entry );
         result.setPresence( getPresence( entry ) );
+        result.setCodeSharingEnabled( isCodeSharingEnable( result ) );
         rosterEntryMap.put( entry.getUser(), result );
         return result;
     }
 
+    public List< BuddyBean > getOnlineBuddies() throws XMPPException
+    {
+        List< BuddyBean > result = new LinkedList<BuddyBean>();
 
-    private final Map< String, BuddyBean > rosterEntryMap = new HashMap< String, BuddyBean >(  );
+        for ( BuddyBean buddy : getAllBuddies() )
+        {
+            if ( BuddyLogic.getInstance().isOnline(buddy) )
+            {
+                result.add( buddy );
+            }
+        }
+        return result;
+    }
 
     public List< BuddyBean > getAllBuddies()
     {

@@ -47,6 +47,7 @@ public class BuddyListPanel extends JPanel
             {
                 if ( e.getClickCount() == 2 )
                 {
+                    // TODO : create chat only if buddy is online. offline should not allow create chats.
                     ConnectionProvider.getInstance().createChat( getSelectedBuddy() );
                 }
             }

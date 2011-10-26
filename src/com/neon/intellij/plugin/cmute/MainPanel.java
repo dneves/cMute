@@ -3,7 +3,10 @@ package com.neon.intellij.plugin.cmute;
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.packet.Message;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.BorderLayout;
@@ -199,35 +202,12 @@ public class MainPanel extends JPanel
     private void stopBlink( int atIndex )
     {
         // TODO : tab changed to a chat one. stop chat tab component atIndex from blinking.
-        System.out.println( "TODO : stop tab blinking" );
+        System.out.println( "MainPanel . stopBlink() : TODO - stop tab blinking" );
     }
 
     public JTabbedPane getTabsHolder()
     {
         return tabsHolder;
-    }
-
-
-
-
-    public static void main( String ... args )
-    {
-        MainPanel view = new MainPanel();
-
-        final JFrame frame = new JFrame( ConnectionProvider.SOFTWARE_NAME + " - v" + ConnectionProvider.SOFTWARE_VERSION );
-        frame.setLayout( new BorderLayout( 5, 5 ) );
-        frame.add(view, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo( null );
-        SwingUtilities.invokeLater( new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                frame.setVisible( true );
-            }
-        });
     }
 
 }

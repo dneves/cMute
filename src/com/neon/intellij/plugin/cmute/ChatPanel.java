@@ -41,6 +41,8 @@ public class ChatPanel extends JPanel
 		setupComponents();
 		setupListeners();
 		setupLayout();
+
+        // TODO : cursor should always be inside textbox.
 	}
 
 	private void setupComponents()
@@ -76,7 +78,7 @@ public class ChatPanel extends JPanel
 
     public void processReceivedMessage( Message message )
     {
-        if ( message != null )
+        if ( message != null && message.getBody() != null )
         {
             String name = buddyBean.getRosterEntry().getName();
             append( DF.format( new Date() ) + " " + name + " : " + message.getBody() );
